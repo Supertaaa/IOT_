@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Forgot Password</title>
+
+    <!-- Custom fonts for this template-->
+    <script type="text/javascript" src="js/alert.js"></script>
+    <script src="js/config.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .image-container img {
+            width: 100%; /* Set the container width */
+            height: 100%; /* Set the container height (using viewport height) */
+            background-size: cover; /* Scale the background image to cover the entire container */
+            background-position: center; /* Position the background image in the center */
+        }
+    </style>
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div id="showAlert"></div>
+                        <div class="row">
+                            <div class="col-lg-6 image-container"><img src="img/img2.jpg" alt="Girl in a jacket"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
+                                        <p class="mb-4">We get it, stuff happens. Just enter your code below!
+                                            </p>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Enter code">
+                                        </div>
+                                        <a id="resetpassword" class="btn btn-primary btn-user btn-block">
+                                            Reset Password
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Create an Account!</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="login.html">Already have an account? Login!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="vertifyCodeModal" class="modal fade">
+            <div class="modal-dialog" style="
+            margin-top: 10rem;
+            margin-bottom: 10rem;
+        ">
+                <div class="modal-content">
+                    <form>
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Add New Room</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">					
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id ="addName" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            
+                            
+                            <input type="button" class="btn btn-info" data-dismiss="modal" id="addNewRoom" value="Add">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).on("click", "#resetpassword", function(){
+            checkUserHosting().then((data) => {
+                jsonUrl = data.hostname;
+                jsonPort = data.port
+                formData = {email:localStorage.getItem("email"), code: $("#exampleInputEmail").val()}
+                    
+                $.ajax({
+
+                    method: "GET",
+                    url: jsonUrl+":"+jsonPort+"/user/vertify_reset_password",
+                    data: formData,
+                    
+                    success: function(mydata){
+                        localStorage.setItem("code", $("#exampleInputEmail").val())
+                        window.location.href = "change-password.html"
+                    },
+                    error: function(mydata){
+                        
+                        alertFail("Invalid Code!")
+                    }
+
+                })
+            })
+        })
+
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>
