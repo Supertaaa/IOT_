@@ -138,7 +138,7 @@
                         method: "POST",
                         url: jsonUrl+":"+jsonPort+"/user/login",
                         data: formData,
-                        
+
                         success: function(mydata){
                             $.cookie("token", mydata["token"])
                             $.cookie("emanu", mydata["emanu"])

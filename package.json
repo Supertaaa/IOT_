@@ -51,8 +51,8 @@
         "gulp-uglify": "3.0.2",
         "merge-stream": "2.0.0"
     },
-    "hostname": "https://subseco.serveo.net",
-    "port":""
+    "hostname": "https://iudico.serveo.net",
+    "port":"443"
 
 
 }
