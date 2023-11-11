@@ -471,7 +471,10 @@
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        
+                        'ngrok-skip-browser-warning': 'true' 
+                        
                     },
                     url: jsonUrl+"/room/listAll",
                     dataType: "json",
@@ -546,7 +549,8 @@
                 data: formDataAdd,
                 headers: {
                     "Authorization": "Bearer " + $.cookie("token"),
-                    "Emanu": $.cookie("emanu")
+                    "Emanu": $.cookie("emanu"),
+                    'ngrok-skip-browser-warning': 'true' 
                 },
 
                 success: function(mydata){
@@ -595,7 +599,8 @@
                 data: formDataAdd,
                 headers: {
                     "Authorization": "Bearer " + $.cookie("token"),
-                    "Emanu": $.cookie("emanu")
+                    "Emanu": $.cookie("emanu"),
+                    'ngrok-skip-browser-warning': 'true' 
                 },
 
                 success: function(mydata){

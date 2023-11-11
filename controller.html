@@ -586,7 +586,8 @@
                     url: jsonUrl+"/detail/listAll",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                     dataType: "json",
                     data: {userId: $.cookie("resudi")},
@@ -660,7 +661,8 @@
                     url: jsonUrl+"/api/v1/device/switch-controller",
                     headers: {
                             "Authorization": "Bearer " + $.cookie("token"),
-                            "Emanu": $.cookie("emanu")
+                            "Emanu": $.cookie("emanu"),
+                            'ngrok-skip-browser-warning': 'true' 
                         },
                     data: formData,
 

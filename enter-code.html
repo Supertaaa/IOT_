@@ -97,6 +97,9 @@
                     method: "GET",
                     url: jsonUrl+"/user/vertify_reset_password",
                     data: formData,
+                    headers: { 
+                            'ngrok-skip-browser-warning': 'true' 
+                    },
                     
                     success: function(mydata){
                         localStorage.setItem("code", $("#exampleInputEmail").val())

@@ -438,13 +438,15 @@
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
                 
+                
 
                 $.ajax({
                     method: "GET",
 
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                     
                     url: jsonUrl+"/detail/getType",
@@ -463,12 +465,14 @@
                         console.log("NGU")
                     }
                 })
+                
                 $.ajax({
 
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                     url: jsonUrl+"/detail/listAllByRoom",
                     dataType: "json",
@@ -547,7 +551,8 @@
                 url: jsonUrl+"/api/v1/device/test",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                 data: formDataTest,
 
@@ -561,7 +566,8 @@
                         data: formDataAdd,
                         headers: {
                             "Authorization": "Bearer " + $.cookie("token"),
-                            "Emanu": $.cookie("emanu")
+                            "Emanu": $.cookie("emanu"),
+                            'ngrok-skip-browser-warning': 'true' 
                         },
 
                         success: function(mydata){
@@ -614,7 +620,8 @@
                 url: jsonUrl+"/api/v1/device/test",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                 data: formData,
 

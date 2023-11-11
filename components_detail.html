@@ -581,6 +581,7 @@
         </div>
     </div>
 
+    
 
     <script>
 
@@ -592,7 +593,8 @@
                 url: jsonUrl+"/detail/getType",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                 
                 success: function(res){
@@ -623,6 +625,7 @@
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
                 
+                
 
                 $.ajax({
 
@@ -632,7 +635,8 @@
                     dataType: "json",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
 
                     success: function(mydata){
@@ -712,7 +716,8 @@
                     url: jsonUrl+"/detail/delete",
                     headers: {
                             "Authorization": "Bearer " + $.cookie("token"),
-                            "Emanu": $.cookie("emanu")
+                            "Emanu": $.cookie("emanu"),
+                            'ngrok-skip-browser-warning': 'true' 
                         },
                     data: formData,
 
@@ -761,7 +766,8 @@
                     url: jsonUrl+"/detail/update",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
-                        "Emanu": $.cookie("emanu")
+                        "Emanu": $.cookie("emanu"),
+                        'ngrok-skip-browser-warning': 'true' 
                     },
                     data: formData,
 

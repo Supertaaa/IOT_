@@ -158,6 +158,9 @@
                         url: jsonUrl+"/user/createUser",
                         data: formData,
                         dataType: "json",
+                        headers: { 
+                            'ngrok-skip-browser-warning': 'true' 
+                        },
                         success: function(mydata){
 
                             
@@ -207,6 +210,9 @@
                             method: "GET",
                             url: jsonUrl+"/user/vertify_email",
                             data: formData,
+                            headers: { 
+                                'ngrok-skip-browser-warning': 'true' 
+                            },
                             
                             success: function(mydata){
                                 var linkElement = document.getElementById("sendEmail");
