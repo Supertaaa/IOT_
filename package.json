@@ -51,8 +51,8 @@
         "gulp-uglify": "3.0.2",
         "merge-stream": "2.0.0"
     },
-    "hostname": "https://iudico.serveo.net",
-    "port":"443"
+    "hostname": "https://leading-anchovy-adequately.ngrok-free.app",
+    "port":""
 
 
 }
