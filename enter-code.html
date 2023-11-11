@@ -89,13 +89,13 @@
         $(document).on("click", "#resetpassword", function(){
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
                 formData = {email:localStorage.getItem("email"), code: $("#exampleInputEmail").val()}
                     
                 $.ajax({
 
                     method: "GET",
-                    url: jsonUrl+":"+jsonPort+"/user/vertify_reset_password",
+                    url: jsonUrl+"/user/vertify_reset_password",
                     data: formData,
                     
                     success: function(mydata){

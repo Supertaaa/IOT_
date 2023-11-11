@@ -586,10 +586,10 @@
 
         checkUserHosting().then((data) => {
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
             $.ajax({
                 method: "GET",
-                url: jsonUrl+":"+jsonPort+"/detail/getType",
+                url: jsonUrl+"/detail/getType",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")
@@ -622,13 +622,13 @@
 
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
 
                 $.ajax({
 
                     method: "GET",
                     data: formData,
-                    url: jsonUrl+":"+jsonPort+"/detail/getDeviceById",
+                    url: jsonUrl+"/detail/getDeviceById",
                     dataType: "json",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
@@ -700,7 +700,7 @@
     <script>
         checkUserHosting().then((data) => {
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
 
             $(document).on('click','#deleteDevice',function(){
                 // console.log($(this).val())
@@ -709,7 +709,7 @@
                 $.ajax({
 
                     method: "DELETE",
-                    url: jsonUrl+":"+jsonPort+"/detail/delete",
+                    url: jsonUrl+"/detail/delete",
                     headers: {
                             "Authorization": "Bearer " + $.cookie("token"),
                             "Emanu": $.cookie("emanu")
@@ -754,11 +754,11 @@
 
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
                 $.ajax({
 
                     method: "PUT",
-                    url: jsonUrl+":"+jsonPort+"/detail/update",
+                    url: jsonUrl+"/detail/update",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")

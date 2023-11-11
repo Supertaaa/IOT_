@@ -129,14 +129,14 @@
             else{
                 checkUserHosting().then((data) => {
                     jsonUrl = data.hostname;
-                    jsonPort = data.port
+                    
                     formData = {userName:$("#exampleInputEmail").val(),
                             passWord: $("#exampleInputPassword").val()}
                 
                     $.ajax({
 
                         method: "POST",
-                        url: jsonUrl+":"+jsonPort+"/user/login",
+                        url: jsonUrl+"/user/login",
                         data: formData,
 
                         success: function(mydata){

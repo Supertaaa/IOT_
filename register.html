@@ -150,12 +150,12 @@
                 console.log(formData)
                 checkUserHosting().then((data) => {
                     jsonUrl = data.hostname;
-                    jsonPort = data.port
+                    
                     $.ajax({
 
                 
                         method: "POST",
-                        url: jsonUrl+":"+jsonPort+"/user/createUser",
+                        url: jsonUrl+"/user/createUser",
                         data: formData,
                         dataType: "json",
                         success: function(mydata){
@@ -198,14 +198,14 @@
                     
                     checkUserHosting().then((data) => {
                         jsonUrl = data.hostname;
-                        jsonPort = data.port
+                        
                         formData = {email:$("#exampleInputEmail").val(),}
                 
                     
                         $.ajax({
 
                             method: "GET",
-                            url: jsonUrl+":"+jsonPort+"/user/vertify_email",
+                            url: jsonUrl+"/user/vertify_email",
                             data: formData,
                             
                             success: function(mydata){

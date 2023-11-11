@@ -437,7 +437,7 @@
 
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
 
                 $.ajax({
                     method: "GET",
@@ -447,7 +447,7 @@
                         "Emanu": $.cookie("emanu")
                     },
                     
-                    url: jsonUrl+":"+jsonPort+"/detail/getType",
+                    url: jsonUrl+"/detail/getType",
                     
                     success: function(res){
                         html = ""
@@ -470,7 +470,7 @@
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")
                     },
-                    url: jsonUrl+":"+jsonPort+"/detail/listAllByRoom",
+                    url: jsonUrl+"/detail/listAllByRoom",
                     dataType: "json",
                     data: {id: localStorage.getItem("roomId")},
                     
@@ -539,12 +539,12 @@
         checkUserHosting().then((data) => {
 
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
 
             $.ajax({
 
                 method: "GET",
-                url: jsonUrl+":"+jsonPort+"/api/v1/device/test",
+                url: jsonUrl+"/api/v1/device/test",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")
@@ -556,7 +556,7 @@
                     $.ajax({
 
                         method: "POST",
-                        url: jsonUrl+":"+jsonPort+"/detail/create",
+                        url: jsonUrl+"/detail/create",
 
                         data: formDataAdd,
                         headers: {
@@ -607,11 +607,11 @@
         console.log(formData)
         checkUserHosting().then((data) => {
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
             $.ajax({
 
                 method: "GET",
-                url: jsonUrl+":"+jsonPort+"/api/v1/device/test",
+                url: jsonUrl+"/api/v1/device/test",
                 headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")

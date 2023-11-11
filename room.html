@@ -464,7 +464,7 @@
 
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
 
                 $.ajax({
 
@@ -473,7 +473,7 @@
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")
                     },
-                    url: jsonUrl+":"+jsonPort+"/room/listAll",
+                    url: jsonUrl+"/room/listAll",
                     dataType: "json",
                     data: {userId: $.cookie("resudi")},
                     
@@ -534,14 +534,14 @@
         checkUserHosting().then((data) => {
 
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
 
             
 
             $.ajax({
 
                 method: "POST",
-                url: jsonUrl+":"+jsonPort+"/room/create",
+                url: jsonUrl+"/room/create",
 
                 data: formDataAdd,
                 headers: {
@@ -583,14 +583,14 @@
         checkUserHosting().then((data) => {
 
             jsonUrl = data.hostname;
-            jsonPort = data.port
+            
 
             
 
             $.ajax({
 
                 method: "POST",
-                url: jsonUrl+":"+jsonPort+"/room/add_by_code",
+                url: jsonUrl+"/room/add_by_code",
 
                 data: formDataAdd,
                 headers: {

@@ -579,11 +579,11 @@
             
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
 
                 $.ajax({
                     method: "GET",
-                    url: jsonUrl+":"+jsonPort+"/detail/listAll",
+                    url: jsonUrl+"/detail/listAll",
                     headers: {
                         "Authorization": "Bearer " + $.cookie("token"),
                         "Emanu": $.cookie("emanu")
@@ -652,12 +652,12 @@
             //console.log($(this).val())
             checkUserHosting().then((data) => {
                 jsonUrl = data.hostname;
-                jsonPort = data.port
+                
                 formData = {id: $(this).val()}
                 $.ajax({
 
                     method: "GET",
-                    url: jsonUrl+":"+jsonPort+"/api/v1/device/switch-controller",
+                    url: jsonUrl+"/api/v1/device/switch-controller",
                     headers: {
                             "Authorization": "Bearer " + $.cookie("token"),
                             "Emanu": $.cookie("emanu")
