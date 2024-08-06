@@ -1,5 +1,6 @@
 package com.example.myroom.Service.Impl;
 
+import com.example.myroom.Entities.Token;
 import com.example.myroom.Entities.User;
 import com.example.myroom.Repository.TokenRepository;
 import com.example.myroom.Repository.UserRepository;
@@ -25,6 +26,9 @@ public class UserImpl implements UserInterface {
 
     @Value("${aes.secret.key}")
     private String secretKey;
+
+    @Value("${password.token.available.in.minute}")
+    private Long minute;
 
     @Autowired
     UserRepository userRepository;
@@ -54,7 +58,7 @@ public class UserImpl implements UserInterface {
     }
 
     public ResponseEntity<?> createUser(User user, String token) throws Exception {
-        if(tokenRepository.findByValueAndType(token, 1) == null){
+        if(tokenRepository.findByUserIdAndValueAndType(user.getId(),token, 0) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CODE DOES NOT MATCH");
         }
         HashMap<String, Object> result = new HashMap<>();
@@ -87,8 +91,24 @@ public class UserImpl implements UserInterface {
         User user = userRepository.findByUserName(username);
         if (user != null){
 
-            user.setRecoverPassCode(Integer.toString(randomNumber));
-            userRepository.save(user);
+            Token token = tokenRepository.findByUserIdAndType(user.getId(), 1);
+
+            if(token != null){
+                token.setValue(String.valueOf(randomNumber));
+                token.setCreateDate(LocalDateTime.now());
+                token.setExpiredTime(LocalDateTime.now().plusMinutes(minute));
+                tokenRepository.save(token);
+            }
+            else {
+                Token resetPassToken = new Token();
+                resetPassToken.setUserId(user.getId());
+                resetPassToken.setType(1);
+                resetPassToken.setValue(String.valueOf(randomNumber));
+                resetPassToken.setCreateDate(LocalDateTime.now());
+                resetPassToken.setExpiredTime(LocalDateTime.now().plusMinutes(minute));
+            }
+
+
             if(response.equals("OK")){
                 return ResponseEntity.ok("OK");
             }
