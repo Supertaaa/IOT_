@@ -1,4 +1,4 @@
-package com.example.myroom.Service;
+package com.example.myroom.Util;
 
 import org.springframework.stereotype.Service;
 

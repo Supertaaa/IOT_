@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Setter
 @Getter
@@ -18,4 +20,6 @@ public class DeviceType {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String typeName;
+    private LocalDateTime createDate;
+    private Integer type; //1:theo range, 0:on/off
 }

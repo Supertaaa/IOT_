@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -29,16 +30,10 @@ public class User {
 
     private String passWord;
 
-    private String status;
+    private Integer status; //1:Active, 0:Suspend
 
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
-    private String recoverPassCode;
-
-    private String vertifyCode;
-
-    private String role;
-
-
+    private Integer role; //0:User, 1:Admin
 
 }

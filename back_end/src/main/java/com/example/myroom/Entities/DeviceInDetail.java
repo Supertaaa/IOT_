@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -23,21 +24,17 @@ public class DeviceInDetail {
 
     private String name;
 
-    private String deviceType;
+    private String type;
 
-    private String deviceURL;
+    private Integer typeId;
 
-    private String devicePort;
+    private LocalDateTime createdDate;
 
-    private LocalDate createdDate;
+    private String cloudId;
 
-    private String pin;
+    private String moveRange;
 
-    private String servoRange;
+    private Integer roomId;
 
-    private String roomId;
-
-    @Column(columnDefinition = "DEFAULT 'OFF'")
-    private String status;
-
+    private Integer status = 1;
 }

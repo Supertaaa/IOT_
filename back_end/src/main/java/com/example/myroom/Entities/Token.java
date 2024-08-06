@@ -10,26 +10,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Room {
+public class Token {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private Integer user_id;
 
-    private String code;
+    private String value;
 
-    private LocalDateTime createdDate;
+    private Integer type;
 
-    private Integer status = 1; //1:active, 0:suspend
+    private LocalDateTime createDate;
+
+    private LocalDateTime expiredTime;
 
 }

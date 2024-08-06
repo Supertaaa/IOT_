@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/createUser", "/user/login", "/user/reset_password", "/user/vertify_reset_password", "/user/changePassword", "/user/vertify_email").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+                .antMatchers("/user/createUser", "/user/login", "/user/reset_password", "/user/vertify_reset_password", "/user/changePassword", "/user/vertify_email").permitAll() // Cho phép tất cả mọi người truy cập vào các địa chỉ này
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

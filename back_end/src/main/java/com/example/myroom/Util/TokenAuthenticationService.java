@@ -1,4 +1,4 @@
-package com.example.myroom.Service;
+package com.example.myroom.Util;
 
 /**
  * Created by nhs3108 on 29/03/2017.
@@ -6,21 +6,44 @@ package com.example.myroom.Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security
         .authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
 public class TokenAuthenticationService {
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
-    static final String SECRET = "KEMIATHOIKEMIATH";
-    static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_STRING = "Authorization";
+
+
+    @Value("${JWT.EXPIRATIONTIME}")
+    private long EXPIRATIONTIME_; // 10 days
+
+    @Value("${JWT.SECRET}")
+    private String SECRET_;
+
+    @Value("${JWT.TOKEN_PREFIX}")
+    private String TOKEN_PREFIX_;
+
+    @Value("${JWT.HEADER_STRING}")
+    private String HEADER_STRING_;
+
+    private static long EXPIRATIONTIME; // 10 days
+    private static String SECRET;
+    private static String TOKEN_PREFIX;
+    private static String HEADER_STRING;
+
+    @PostConstruct
+    public void init() {
+        EXPIRATIONTIME = EXPIRATIONTIME_;
+        SECRET = SECRET_;
+        TOKEN_PREFIX = TOKEN_PREFIX_;
+        HEADER_STRING = HEADER_STRING_;
+    }
 
     public static String getToken(String username){
 
@@ -45,9 +68,8 @@ public class TokenAuthenticationService {
             if(AES.decrypt(emanu, "KEMIATHOIKEMIATH").equals(user) ){
                 return new UsernamePasswordAuthenticationToken(user, null, emptyList());
             }
-            return null;
-
+            throw new Exception();
         }
-        return null;
+        throw new Exception();
     }
 }
