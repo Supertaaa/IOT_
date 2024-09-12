@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface DeviceInDetailRepository extends JpaRepository<DeviceInDetail, Integer> {
 
-    @Query(value = "SELECT device_in_detail.id, device_in_detail.name, device_in_detail.status  FROM device_in_detail", nativeQuery = true)
-    public List<DeviceCollapseProjection> getListCollapse();
-    public DeviceInDetail findDeviceInDetailByPinAndAndDeviceURLAndAndDevicePort(String pin, String url, String port);
-    public List<DeviceInDetail> findAllByRoomId(String roomId);
+//    @Query(value = "SELECT device_in_detail.id, device_in_detail.name, device_in_detail.status  FROM device_in_detail", nativeQuery = true)
+//    public List<DeviceCollapseProjection> getListCollapse();
+//    public DeviceInDetail findDeviceInDetailByPinAndAndDeviceURLAndAndDevicePort(String pin, String url, String port);
+    public List<DeviceInDetail> findAllByRoomId(Integer roomId);
 }

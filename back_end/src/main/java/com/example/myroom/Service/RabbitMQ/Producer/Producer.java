@@ -1,4 +1,4 @@
-package vivas.zns.service.rabbitMQ.producer;
+package com.example.myroom.Service.RabbitMQ.Producer;
 
 
 import org.slf4j.Logger;

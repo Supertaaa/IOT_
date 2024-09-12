@@ -34,6 +34,8 @@ public class User {
 
     private LocalDateTime createdDate;
 
+    private LocalDateTime updateDate;
+
     private Integer role; //0:User, 1:Admin
 
 }

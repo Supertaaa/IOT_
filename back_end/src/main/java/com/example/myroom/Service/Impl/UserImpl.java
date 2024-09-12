@@ -39,30 +39,41 @@ public class UserImpl implements UserInterface {
     @Autowired
     private PasswordEncoder encoder;
 
-    public ResponseEntity<?> login(User user) throws Exception {
+    public HashMap<String, Object> login(User user) throws Exception {
 
         HashMap<String, Object> result = new HashMap<>();
-        if (!userRepository.existsUserByUserName(user.getUserName())){return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT FOUND");}
+        if (!userRepository.existsUserByUserName(user.getUserName())){
+            result.put("error_code", "-1");
+            result.put("error_message", "NOT FOUND");
+            return result;
+        }
         User u = userRepository.findByUserName(user.getUserName()); //gets user object
         String password = u.getPassWord();
         if (!BCrypt.checkpw(user.getPassWord(), password)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT FOUND USER");
+            result.put("error_code", "-1");
+            result.put("error_message", "WRONG PASSWORD");
+            return result;
         }
+        result.put("error_code", "0");
         result.put("emanu", AES.encrypt(u.getUserName(),secretKey));
         //result.put("resudi", AES.encrypt(Integer.toString(u.getId()),"KEMIATHOIKEMIATH"));
         result.put("firstName", u.getFirstName());
         result.put("lastName", u.getLastName());
         result.put("token", TokenAuthenticationService.getToken(user.getUserName()));
 
-        return ResponseEntity.ok(result);
+        return result;
     }
 
-    public ResponseEntity<?> createUser(User user, String token) throws Exception {
-        if(tokenRepository.findByUserIdAndValueAndType(user.getId(),token, 0) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CODE DOES NOT MATCH");
-        }
+    public HashMap<String, Object> createUser(User user, String token) throws Exception {
+
         HashMap<String, Object> result = new HashMap<>();
-        if (userRepository.existsUserByUserName(user.getUserName())){return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("USER EXISTED");}
+        if(tokenRepository.findByUserIdAndValueAndType(user.getId(),token, 0) == null){
+            result.put("error_code", "-1");
+            result.put("error_message", "CODE DOES NOT MATCH");
+            return result;
+        }
+
+        //if (userRepository.existsUserByUserName(user.getUserName())){return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("USER EXISTED");}
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setPassWord(encoder.encode(user.getPassWord()));
@@ -72,16 +83,23 @@ public class UserImpl implements UserInterface {
         newUser.setStatus(1);
         newUser.setRole(0);
         userRepository.save(newUser);
+
+
+        result.put("error_code", "0");
         result.put("emanu", AES.encrypt(newUser.getUserName(),secretKey));
         //result.put("resudi", AES.encrypt(Integer.toString(newUser.getId()),"KEMIATHOIKEMIATH"));
         result.put("firstName", newUser.getFirstName());
         result.put("lastName", newUser.getLastName());
         result.put("token", TokenAuthenticationService.getToken(user.getUserName()));
 
-        return ResponseEntity.ok(result);
+        return result;
     }
 
-    public ResponseEntity<?> resetPassword(String username) {
+    public HashMap<String, Object> resetPassword(String username) {
+
+
+        HashMap<String, Object> result = new HashMap<>();
+
 
         Random random = new Random();
         int randomNumber = random.nextInt(900000) + 100000;
@@ -110,21 +128,95 @@ public class UserImpl implements UserInterface {
 
 
             if(response.equals("OK")){
-                return ResponseEntity.ok("OK");
+                result.put("error_code", "0");
+                return result;
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CANNOT RESOLVE");
+        result.put("error_code", "-1");
+        result.put("error_message", "CANNOT RESOLVE");
+
+        return result;
     }
 
-    public ResponseEntity<?> verifyResetPassword(String username, String token) {
-        return null;
+    public HashMap<String, Object> verifyResetPassword(String username, String token) {
+
+        User user = userRepository.findByUserName(username);
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        if(user != null){
+
+            if(tokenRepository.findByUserIdAndType(user.getId(), 1).getValue().equals(token)){
+//                Random random = new Random();
+//                int randomPass = random.nextInt(900000) + 100000;
+//                user.setPassWord(Integer.toString(randomPass));
+//                userRepository.save(user);
+                result.put("error_code", "0");
+                return result;
+            }
+        }
+
+        result.put("error_code", "-1");
+        result.put("error_message", "CODE DOES NOT MATCH OR EMAIL DOES NOT EXIST");
+        return result;
     }
 
-    public ResponseEntity<?> changePass(String token, String username, String password) {
-        return null;
+    public HashMap<String, Object> changePass(String token, String username, String password) {
+
+        HashMap<String, Object> result = new HashMap<>();
+        User user = userRepository.findByUserName(username);
+        if (user != null){
+
+            System.out.println("NGU");
+            if (tokenRepository.findByUserIdAndType(user.getId(), 1).getValue().equals(token)){
+                result.put("error_code", "0");
+                user.setPassWord(encoder.encode(password));
+                user.setUpdateDate(LocalDateTime.now());
+                userRepository.save(user);
+
+
+                return result;
+            }
+        }
+        result.put("error_code", "-1");
+        result.put("error_message", "CODE DOES NOT MATCH OR EMAIL DOES NOT EXIST");
+
+        return result;
     }
 
-    public ResponseEntity<?> verifyEmail(String email) {
-        return null;
+    public HashMap<String, Object> verifyEmail(String username) {
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        if(userRepository.existsUserByUserName(username)){
+
+            result.put("error_code", "-1");
+            result.put("error_message", "USER ALREADY EXISTS");
+
+            return result;
+        }
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(900000) + 100000;
+
+        String content = "<h1>Verify Code</h1><p>Your code: <strong>" + randomNumber + "</strong></p>";
+        String response = SendEmail.send(username,"Mar Heaven sends your verify code", content);
+        if(response.equals("OK")){
+
+            Token verifyToken = new Token();
+            verifyToken.setUserId(userRepository.findByUserName(username).getId());
+            verifyToken.setValue(String.valueOf(randomNumber));
+            verifyToken.setType(0);
+            verifyToken.setExpiredTime(LocalDateTime.now().plusMinutes(minute));
+            verifyToken.setCreateDate(LocalDateTime.now());
+
+            tokenRepository.save(verifyToken);
+            result.put("error_code", "0");
+            return result;
+        }
+        result.put("error_code", "-1");
+        result.put("error_message", "EMAIL DOES NOT EXIST!");
+
+        return result;
     }
 }

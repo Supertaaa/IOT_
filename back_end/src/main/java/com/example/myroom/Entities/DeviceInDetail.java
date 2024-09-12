@@ -30,6 +30,8 @@ public class DeviceInDetail {
 
     private LocalDateTime createdDate;
 
+    private LocalDateTime updatedDate;
+
     private String cloudId;
 
     private String moveRange;
